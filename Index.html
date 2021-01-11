@@ -32,10 +32,413 @@
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
+    https://github.com/johnph/simple-transaction
 
-
-
+    https://code-maze.com/api-gateway-pattern-dotnet-encapsulate-microservices/#adding-our-api-gateway
     
+    https://code-maze.com/azure-with-asp-net-core-series/
+    
+    Why: Serverless Microsevices
+    
+    Introduction to Serverless Microservices
+    
+    What are microservices?
+    
+    Microservices are an architectural style for building applications that consist of loosely-coupled, self-contained modules that are small enough to take care of a single business capability.
+    
+    Each microservice is a separate codebase, and is responsible for persisting their own data or external state. Microservices communicate with each other by using well-defined APIs. 
+    
+    Microservices are resilient, highly scalable, independently built, verified, deployed and monitored, and able to evolve quickly.
+    
+    Benefits
+    
+    Applications that are based on a microservices architecture combine these independent modules into a highly decoupled collection, providing the following benefits over traditional "monolithic" applications:
+    
+    Small code base. In a monolithic application, there is a tendency over time for code dependencies to become tangled. Adding a new feature requires touching code in a lot of places. By not sharing code or data stores, a microservices architecture minimizes dependencies, and that makes it easier to add new features.
+    
+    Scale services autonomously: The independent microservices modules and their related services can be individually and automatically scaled based on their respective demands without impacting the application's overall performance. The ability to independently scale removes the need to scale the entire app up or down, potentially saving costs and reducing downtime.
+    
+    Isolate points of failure: Each of the services can be managed independently, isolating potential problem areas to individual services, and replacing or retiring services when deprecated or unused without affecting the overall structure and functionality. If an individual microservice becomes unavailable, it won't disrupt the entire application, as long as any upstream microservices are designed to handle faults correctly (for example, by implementing 'circuit breaking').
+    
+    Data isolation. It is much easier to perform schema updates, because only a single microservice is affected. In a monolithic application, schema updates can become very challenging, because different parts of the application may all touch the same data, making any alterations to the schema risky.
+    
+    Use the best approach: Microservices solutions let development teams use the best deployment approach, language, platform, and programming model for each service, providing flexibility in choosing technologies and tools.
+    
+    Small, focused teams. A microservice should be small enough that a single feature team can build, test, and deploy it. Small team sizes promote greater agility. Large teams tend be less productive, because communication is slower, management overhead goes up, and agility diminishes.
+    
+    Agility. Because microservices are deployed independently, it's easier to manage bug fixes and feature releases. A service can be updated without redeploying the entire application, and rolled back if an update goes wrong.
+    
+    Deliver value faster: Microservices increase agility putting new features in production and adding business value to solutions, as the deployment of small and independent modules requires much less time, and several teams can be working on different services at the same time, reducing development time and simplifying deployment.
+    
+    What is serverless?
+    
+    The term "serverless" can be confusing. It can be read as "no servers", in the way that "cloudless sky" means "no clouds". In the case of serverless architecture, it simply means you focus "less on servers", and more on the functionality and features of your solution. This is because serverless abstracts away servers, so you do not need to worry about server configuration, scaling of underlying resources is usually automatically handled for you based on load, number of messages, and other metrics, and your deployments are done at the service and application-level rather than at the infrastructure-level.
+    
+    The result is increased productivity, ease of development, simplified interoperability with other services through event-driven triggers and preconfigured service hooks, and increased choice of languages and tooling for the solution through mixing and matching various serverless components.
+    
+    A Different Approach
+    
+    A successful serverless microservices architecture requires a different approach to designing and building applications.
+    
+    How: Serverless Microsevices Referenece Architecture
+    
+    Background
+    
+    Energia Group recognises the value in combining the flexibility and service isolation of a microservices architecture, with the consumption-based billing (pay based on usage, like a utility bill), independently distributed nature of serverless technologies on Azure, to rapidly build and grow their application portfolio.
+    
+    The combination of these architectures, deemed "serverless microservices", is ideal for helping Energia Group reach their goals.
+    
+    Introduction
+    
+    (Architecture diagram and components: This section describes a reference architecture for a Serverless Microservices application.)
+    
+    This reference architecture walks through the decision-making process involved in designing, developing, and delivering a serverless application using a microservices architecture.
+    
+    The Reference Architecture
+    
+    Azure is an open and flexible cloud platform that enables an enterprise to quickly build, deploy, and manage applications across a global network of Microsoft managed datacenters.
+    
+    Applications can be built using any language, tool, or framework; public cloud applications can be integrated with existing IT infrastructure in a hybrid environment.
+    
+    The following diagram, 'Serverless Miroservices - Reference Architecture Overview', illustrates a serverless microservices architecture for use by Energia Group in the development of future solutions.
+    
+    Serverless Miroservices - Reference Architecture Overview (VISIO): TO DO
+    
+    This section provides a description and rationale for each of the architecture's components, and presents Preferred, Emerging, Maintaining and Retiring services and technologies to be used in a cohesive and unified way to build small- and large-scale serverless microservice solutions.
+    
+    The following paragraphs describe the different architecture components, how they communicate, and the Azure services they use.
+    
+    
+    
+    Client App
+    
+    Preferred: C#. A native app (iOS and Android). React Native. Progressive Web App.
+    
+    Emerging: Blazor WebAssembly (not Server) App ASP.NET Core Hosted.
+    
+    Maintaining:
+    
+    Retiring: A single-page app built using a JavaScript Framework e.g., Angular, React.
+    
+    The client app, typically, enables users to sign up and sign in:
+    for (prospective) Customer users against an Azure B2C Active Directory instance;
+    for external Agent users against an Azure B2C Active Directory instance;
+    for internal Energia Group business users against an Azure Active Directory instance.
+    
+    Different user types will have different permissions. For example:
+    (prospective) Customer users may register for a product and receive real-time notifications of registration status;
+    external Agent users may register multiple (prospective) Customer users for a product and receive real-time status notifications for each of registration;
+    internal Energia Group business users may view all registrations and registration statuses.
+    
+    The Client App uses the Azure API Management component to access the solution API Microservice(s). Each HTTP request flows through the API Management endpoints to each of the underlying Azure Functions that serve those requests.
+    
+    User data is accessed via calls to the Microsoft Graph API.
+    
+    
+    DNS (Cloudflare) - hosting service for DNS domains, providing name resolution, and management of DNS records.
+    
+    DNS: The Domain Name System, or DNS, is responsible for translating (or resolving) a website or service name to its IP address.
+    
+    Application Gateway - provide external (Zesty) access from the Internet to the Azure environment (which is currently, private-by-default, i.e., non-Internet routable).
+    
+    
+    Authentication and Authorisation
+    AAD, AADB2C, AADB2B.
+    
+    Azure Active Directory B2C is used for user authentication and profile management. With it, users can self-service their accounts, which means they are able to register for a new account, manage their profile information (mailing address, phone number, etc.), and initiate a password reset if needed.
+    
+    The Microsoft Authentication Library (MSAL) enabling the user to log in and out of their Azure Active Directory B2C account.
+    
+    HTTP calls to Azure that requires authentication should be added as Bearer (Authentication) Tokens to the request header.
+    
+    Azure Active Directory role-based access control is used for controlling access to deployed resources, including their keys in Azure Key Vault.
+    
+    Identity management
+    
+    The following technologies provide capabilities to manage access to data in the Azure environment:
+    
+    Azure Active Directory is Microsoft's multi-tenant cloud-based directory and identity management service. All users for this solution are created in Azure Active Directory, including users accessing the Azure SQL Database.
+    
+    Authentication to the application is performed using Azure Active Directory. 
+    
+    Azure role-based access control enables administrators to define fine-grained access permissions to grant only the amount of access that users need to perform their jobs. Instead of giving every user unrestricted permission for Azure resources, administrators can allow only certain actions for accessing data.
+    
+    
+    
+    
+    Azure API Management
+    
+    The API Management or 'gateway' component acts as a 'front-end' to the solution APIs.
+    
+    HTTP-triggered Azure functions are a key component of a serverless microservices architecture. However, they are publically accessible, and therefore,  need to be secured. One way would be to build authentication and authorization into the Azure Function itself. However, this does not prevent public access to the HTTP endpoint. And even though the function would be secured, Azure will still charge for the execution, making it a target of a "denial-of-wallet" attack.
+    
+    Azure API Management (APIM) and Azure Active Directory should be used to secure publicly accessible HTTP Azure Functions.
+    
+    As seen in the diagram, 'Serverless Microservices - Reference Architecture Overview', APIM will 'sit' between the Client App and the Function endpoint (in the API Microservice), enabling user authentication and authorisation, and securing the Azure Function with Azure Active Directory (and APIM Managed Identity).
+    
+    
+    Rationale: The major benefits to using Azure API Management are:
+    
+    Security: the API Management component authenticates the incoming API requests against Azure Active Directory.
+    Documentation: the API Management component provides developers writing applications against APIs with a complete development resource for documentation and testing.
+    Usage Statistics: the API Management component provides usage statistics on all API calls (and failures) which makes it possible to assess API performance.
+    Traffic Flow Management:
+    Rate Limiting: the API Management component can be configured to rate limit APIs based on IP origin, access, etc.
+    Observability:
+    Versioning:
+    Discoverability:
+    A facade to legacy web services:
+    
+    
+    API Microservice
+    
+    C# Azure Function Apps are implemented to provide the functionality for each Microservice API, for example, Products, Rates, Registrations, etc.
+    
+    These APIs are exposed to the Client App via API Management and provide, for instance, CRUD operations for each of the domain entities.
+    
+    A microservice can work on its own or call other microservices via REST. (API will call a microservice or a sequence of microservices to fulfill the request.)
+    
+    Each microservice can have its own datastore.
+    
+    All API Microservices shall:
+    Be built using C# Azure Functions using RESTful design principles.
+    Possibly, use a database to store their respective data. Where a database is used, the persistence layer is Entity Framework Core.
+    Use Application Insights to record metrics, telemetry, etc.
+    
+    
+    Database
+    
+    The Microservice data is persisted in an appropriate database.
+    
+    Make use of different data stores, both SQL and NoSQL, for different purposes.
+    
+    Azure SQL Database MI is used as the main data storage for solution entities.
+    
+    If the solution targets a globally distributed audience accessing its services from different parts of the world, Azure Cosmos DB should be considered.
+    
+    (Storage)
+    Azure Blob Storage.
+    
+    All SQL traffic is encrypted with SSL through the inclusion of self-signed certificates. As a best practice, Azure recommends the use of a trusted certificate authority for enhanced security.
+    
+    Data in transit: Azure encrypts all communications to and from Azure datacenters by default.
+    
+    Data at rest: The architecture protects data at rest through encryption, database auditing, and other measures.
+    
+    Azure SQL Database: The Azure SQL Database instance uses the following database security measures:
+    
+    Active Directory authentication and authorization enables identity management of database users and other Microsoft services in one central location.
+    
+    SQL database auditing tracks database events and writes them to an audit log in an Azure storage account.
+    
+    Azure SQL Database is configured to use transparent data encryption, which performs real-time encryption and decryption of the database, associated backups, and transaction log files to protect information at rest. Transparent data encryption provides assurance that stored data has not been subject to unauthorized access.
+    
+    
+    
+    Orchestration Microservice
+    
+    C# Azure Durable Functions are implemented to manage and perform an orchestration or workflow. Orchestrations, typically, make up the 'heart' of the solution.
+    
+    Azure Durable Functions are like Serverless Actors - they are stateful instances running in the Azure Functions container.
+    
+    Each Orchestration Microservice has 3 sections:
+    HTTP Trigger Endpoints - used to start, terminate and retrieve state of a particular orchestration instance.
+    Orchestration Function - used to provide the orchestration main body of execution and state management.
+    Activity Functions - one or more activity functions that the orchestration calls upon to run the different activities that make up the execution.
+    
+    Azure Durable Functions are, typically, easier to setup, maintain and code.
+    
+    An API Microservice can 'enqueue' an item, for example, a Registration item, onto a Storage Queue within the Orchestration Microservice. The 'enqueuing' of the item will trigger the Orchestration, i.e., the C# Azure Durable Function, to start. This 'enqueuing' mechanism can be used to 'chain' together multiple Azure Durable Functions to create an orchestration or workflow.
+    
+    Software as a Service (SaaS) connectors, e.g., Salesforce.
+    
+    
+    Event Publisher
+    
+    An Orchestration Microservice can 'publish' a state change event to the (Event Emitter) Event Grid for further processing. For example, when a registration is received the Registration item is posted to the Event Grid Topic.
+    
+    
+    Services intercommunication using Event Grid (Event Emitter)
+    
+    Event Grid is a fully-managed event routing service. It is, typically, used to route state changes and trigger actions by different 'listeners' or processors. Each processor or handler is an independent Microservice that receives a discrete event and determines what type of action needs to be taken.
+    
+    The key advantages of Event Grid Topics are:
+    
+    The emitter 'fires and forgets'. No need to wait until a response arrives.
+    Events can be delivered to multiple 'listeners' that can process the event data.
+    Events have data and meta data, such as subject, that can be used to determine processing. For instance, a Processor can filter out and process events based on a particular subject.
+    
+    
+    Externalisation (Event Subscriber) Microservice
+    
+    C# Azure Function Apps / Logic Apps are implemented as Event Grid Topic subscribers that 'listen' for Event Grid topic events and provide functionality to externalise or progress the process. For example, a Notification (Event Subscriber) Logic App would 'listen' for a registration status event, and, notify a (prospective) Customer user (via email or SMS) about that registration status.
+    
+    
+    Key Vault
+    
+    All secrets, such as database connection strings and keys are securely stored in Azure Key Vault. This prevents accidental leakage of sensitive values and the same keys can be easily shared by multiple services.
+    
+    Secrets management: The solution uses Azure Key Vault for the management of keys and secrets. Azure Key Vault helps safeguard cryptographic keys and secrets used by cloud applications and services. The following Azure Key Vault capabilities help customers protect and access such data:
+    
+    Advanced access policies are configured on a need basis.
+    
+    Key Vault access policies are defined with minimum required permissions to keys and secrets.
+    
+    All keys and secrets in Key Vault have expiration dates.
+    
+    All users and identities are granted minimum required permissions using role-based access control.
+    
+    Diagnostics logs for Key Vault are enabled with a retention period of at least 365 days.
+    
+    
+    
+    Application Development Tools
+    
+    Visual Studio. Visual Studio Code.
+    
+    CI / CD
+    Git repos with Azure DevOps. GitHub Actions for Azure. Azure DevOps Pipeline.
+    
+    
+    Azure DevOps
+    
+    In compliance with the Energia Group Cloud Computing Strategy, it is recommended to use Azure DevOps to assist the re-architect / re-write of any applications. In particular, it is recommended to use:
+    
+    Azure Boards to plan and track the work across teams.
+    
+    Azure Pipelines to build and deploy.
+    
+    Azure Repos to provide cloud-hosted Git repos for each application re-architect / re-write project.
+    
+    Azure Test Plans to improve code quality through planned testing.
+    
+    For doing that, GitHub Actions are an amazing tool to build a CI/CD pipeline. You know that already, I’m sure. (If not, make sure you take a look here: GitHub Actions).
+    
+    There are a couple of possible ways to include the database in the CI/CD pipeline, depending on which development approach you prefer:
+    Migration-based (code-first or database-first).
+    
+    Branching and Merging
+    
+    Branching is used to isolate individual software assets, which allows you to work in parallel with other developers to increase productivity. Branching requires additional effort to merge code. No defined rule exists for how branches are set up, but there is usually a Development, Test, and Production or Release branch. A Development branch is used for code that isn't ready for testing; however, it is shared between developers. Some larger teams might use multiple developer branches. The Test branch is used to hold changes that are ready to be tested by other users. The Production branch will hold all the source code exactly as it's deployed in the production environment. A deployable package is created to move code changes from one environment to another.
+    
+    
+    
+    Monitoring
+    
+    Application Insights and Azure Dashboard are used to monitor a solution in production. For example, response time, requests and failure requests, etc., can be sent from the solution to the solution Application Insights resource, and displayed in the Azure Dashboard.
+    
+    Azure Function Apps should be configured to use Application Insights automatically. This makes it trivial to integrate Function Apps with Application Insights, because the functions within the Function App will transparently send log messages, exceptions, and telemetry data to Applications Insights. 
+    
+    Application Insights helps developers and operations to monitor raw telemetry and overall service health, especially when using a combination of real-time views like Live Metrics Stream and built-in dashboards. These are views that provide crucial information about technical aspects of the application, but generally do not clearly show the overall state of the data and business metrics, such as how many Registrations were submittted vs. how many successful, top Agents by number of Registrations, etc.
+    
+    For business metrics, consideration should be given to the creation of a Power BI or Qlik Sense Externalisation Microservice to save this data to Azure SQL database for consumption from Power BI or Qlik Sense for analyzing snapshots of business metrics. Alternatively, this Externalisation Miroservice could be used to send trips to, for example, a streaming Power BI dataset to display the data in real-time. With this approach, you will have real-time monitoring that is tuned for developers / operations, and for business users.
+    
+    Application Insights provides real time application performance management and analytics through Azure Monitor logs.
+    
+    Azure Monitor: Azure Monitor helps users track performance, maintain security, and identify trends by enabling organizations to audit, create alerts, and archive data, including tracking API calls in their Azure resources.
+    
+    System health is monitored through Azure Monitor. Customers configure both monitoring services to capture logs and display system health in a single, easily navigable dashboard.
+    
+    
+    Logging and Auditing
+    Azure services extensively log system and user activity, as well as system health:
+    
+    Activity logs: Activity logs provide insight into operations performed on resources in a subscription. Activity logs can help determine an operation's initiator, time of occurrence, and status.
+    
+    Diagnostic logs: Diagnostic logs include all logs emitted by every resource. These logs include Windows event system logs, Azure Storage logs, Key Vault audit logs, and Application Gateway access and firewall logs. All diagnostic logs write to a centralized and encrypted Azure storage account for archival. The retention is user-configurable, up to 730 days, to meet organization-specific retention requirements.
+    
+    Azure Monitor logs: These logs are consolidated in Azure Monitor logs for processing, storing, and dashboard reporting.
+    
+    
+    Preparation
+    
+    When considering the use of the Serverless Miroservices architecture, described above, it is recommended to use the following structured approach 
+    1. Identify workloads, and APIs.
+    2. Identify data flows, and volumes.
+    3. Identify compute requirements.
+    4. Identify security & (Personally-Identifiable Information) PII constraints.
+    5. Identify scale & (Quality Of Service) QoS constraints.
+    
+    
+    Microservices
+    
+    The following key criteria is used to determine when a certain piece of functionality is to be considered a Microservice:
+    
+    The functionality must scale or be deployed independently from other solution parts.
+    The functionality must be isolated by a 'clean' boundary.
+    
+    Given these principles, the following section 'What: Serverless Microservices Roadmap' identifies necessary Microservices.
+    
+    
+    Process for Building a Serverless Microservices Architecture
+    
+    The articles listed here present a structured approach for designing, building, and operating a microservices architecture.
+    
+    Domain analysis. To avoid some common pitfalls when designing microservices, use domain analysis to define your microservice boundaries. Follow these steps:
+    1 Use domain analysis to model microservices.
+    2 Use tactical DDD to design microservices.
+    3 Identify microservice boundaries.
+    
+    TO DO https://docs.microsoft.com/en-us/azure/architecture/microservices/
+    
+    Design the services. Microservices require a different approach to designing and building applications. For more information, see Designing a microservices architecture.
+    
+    Operate in production. Because microservices architectures are distributed, you must have robust operations for deployment and monitoring.
+    
+    CI/CD for Serverless Microservices Architectures
+    
+    https://docs.microsoft.com/en-us/azure/architecture/microservices/design/
+    
+    
+    REFERENCES
+    
+    A Design Analysis of Cloud-based Microservices Architecture at Netflix
+    A comprehensive system design analysis of microservices architecture at Netflix to power its global video streaming services.
+    Cao Duc Nguyen
+    1st May, 2020
+    
+    Modern development: creating a REST API, via CI/CD and back
+    Davide Mauri
+    4th January 2021
+    https://medium.com/microsoftazure/modern-development-creating-a-rest-api-via-ci-cd-and-back-866b3f9397d3
+    
+    Building Microservices on Azure
+    30th October, 2019
+    https://docs.microsoft.com/en-us/azure/architecture/microservices/
+    
+    Protecting Azure Functions with API Management Service
+    Igor Bertnyk
+    12th May 2020
+    https://dev.to/ib1/protecting-azure-functions-with-api-management-service-53el
+    
+    Serverless Microservices Reference Architecture
+    Microsoft Azure
+    24th October 2019
+    https://github.com/Azure-Samples/Serverless-microservices-reference-architecture
+    
+    Using the API Gateway Pattern In .NET to Encapsulate Microservices
+    Code Maze
+    5th January 2021
+    https://code-maze.com/api-gateway-pattern-dotnet-encapsulate-microservices/
+    
+    Simple Transaction: Microservices Sample Architecture for .Net Core Application
+    21st March 2019
+    https://github.com/johnph/simple-transaction
+    
+    Reference Architecture and automation for Financial Services web applications
+    19th December, 2017
+    Matt Rathbun Chief Information Security Officer, Azure Government
+    https://azure.microsoft.com/en-gb/blog/reference-architecture-and-automation-for-financial-services-web-applications/
+    
+    Azure Security and Compliance Blueprint: PaaS Web Application for FFIEC Financial Services
+    20th June 2018
+    https://docs.microsoft.com/en-us/previous-versions/azure/security/blueprints/ffiec-paaswa-overview
+    
+    
+    What: Serverless Microservices Roadmap
+
+
+
   </body>
 </html>
 
